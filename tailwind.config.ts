@@ -23,6 +23,8 @@ const config: Config = {
       },
       fontFamily: {
         roboto: ['var(--font-roboto)', 'sans-serif'],
+        special: ['var(--font-special-elite)', 'sans-serif'],
+        orbitron: ['var(--font-orbitron)', 'sans-serif'],
       },
     },
   },
