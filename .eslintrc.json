@@ -11,5 +11,8 @@
   "plugins": ["unused-imports", "import"],
   "rules": {
     //add customize rules here as per your project's needs
+  },
+  "env": {
+    "jest": true
   }
 }
