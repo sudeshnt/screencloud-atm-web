@@ -1,20 +1,21 @@
-import { Button, Text } from '@chakra-ui/react';
+import { Button, ButtonProps, Text } from '@chakra-ui/react';
 
-type MachineKeyProps = {
-  value: string;
+type MachineKeyProps = ButtonProps & {
+  label: string;
 };
 
 export default function MachineKey(props: MachineKeyProps) {
-  const { value } = props;
+  const { label, ...buttonProps } = props;
 
   return (
     <Button
       size='4xl'
       colorScheme='grey'
       className='rounded bg-gray-700 px-6 py-4 font-semibold text-white shadow-md hover:shadow-lg focus:outline-none active:shadow-none'
+      {...buttonProps}
     >
       <Text fontSize='4xl' className='font-key'>
-        {value}
+        {label}
       </Text>
     </Button>
   );

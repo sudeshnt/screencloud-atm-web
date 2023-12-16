@@ -1,6 +1,8 @@
 'use server';
 
-export async function validatePin(pin: string): Promise<any> {
+import { PinValidateResponse } from '../types';
+
+export async function validatePin(pin: string): Promise<PinValidateResponse> {
   try {
     const res = await fetch(`${process.env.API_HOST}/api/pin`, {
       method: 'POST',
@@ -12,7 +14,8 @@ export async function validatePin(pin: string): Promise<any> {
         pin,
       }),
     });
-    return await res.json();
+    const result = await res.json();
+    return result;
   } catch (error) {
     throw new Error((error as Error).message);
   }

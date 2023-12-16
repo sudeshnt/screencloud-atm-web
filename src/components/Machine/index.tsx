@@ -1,15 +1,19 @@
 import { Box } from '@chakra-ui/react';
-import Screen from '../Screen';
-import KeyPad from './KeyPad';
+import { ReactNode } from 'react';
+import KeyPad, { KeyPadProps } from './KeyPad';
 
-export default function Machine() {
+type MachineProps = KeyPadProps & {
+  screen: ReactNode;
+};
+
+export default function Machine(props: MachineProps) {
+  const { screen, ...keypadProps } = props;
+
   return (
     <Box className='flex flex-row gap-5 rounded-lg bg-slate-300 p-8'>
+      <Box>{screen}</Box>
       <Box>
-        <Screen />
-      </Box>
-      <Box>
-        <KeyPad />
+        <KeyPad {...keypadProps} />
       </Box>
     </Box>
   );
