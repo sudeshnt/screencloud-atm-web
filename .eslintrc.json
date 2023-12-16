@@ -1,3 +1,15 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"]
+  "root": true,
+  "ignorePatterns": ["node_modules/**/*"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "plugin:tailwindcss/recommended"
+  ],
+  "plugins": ["unused-imports", "import"],
+  "rules": {
+    //add customize rules here as per your project's needs
+  }
 }
