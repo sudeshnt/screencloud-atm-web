@@ -8,7 +8,8 @@ export type ATMState = {
   appendToPin: (digit: string) => void;
   deleteFromPin: () => void;
   clearPin: () => void;
-  validatePin: () => Promise<void>;
+  validatePin: () => Promise<boolean>;
+  setLoading: (isLoading: boolean) => void;
 };
 
 export type PinValidateResponse = {

@@ -14,6 +14,7 @@ const useATMStore = create<ATMState>((set, get) => ({
       const pin = state.pin;
       return {
         pin: pin.length < 4 ? `${state.pin}${digit}` : pin,
+        error: '',
       };
     });
   },
@@ -22,15 +23,18 @@ const useATMStore = create<ATMState>((set, get) => ({
       const pin = state.pin;
       return {
         pin: pin.length ? state.pin.slice(0, -1) : pin,
+        error: '',
       };
     });
   },
   clearPin: () => {
     set({
       pin: '',
+      error: '',
     });
   },
   validatePin: async () => {
+    let isAuthenticated = false;
     try {
       const { pin } = get();
 
@@ -38,23 +42,33 @@ const useATMStore = create<ATMState>((set, get) => ({
         set({ isLoading: true });
 
         const response = await validatePin(pin);
+        isAuthenticated = !response.error && response.currentBalance != null;
 
-        if (response.currentBalance) {
-          set({
-            currentBalance: response.currentBalance,
-            isAuthenticated: true,
-            error: '',
-          });
-        } else {
-          set({
-            isAuthenticated: false,
-            error: response.error,
-          });
-        }
+        set({
+          pin: isAuthenticated ? '' : pin,
+          isAuthenticated,
+          currentBalance: response.currentBalance,
+          error: response.error,
+        });
       }
-      set({ isLoading: false });
+
+      return isAuthenticated;
     } catch (err) {
-      console.error(err);
+      set({ isLoading: false });
+      return isAuthenticated;
+    }
+  },
+  setLoading: (isLoading: boolean) => {
+    if (isLoading) {
+      set({
+        isLoading,
+      });
+    } else {
+      setTimeout(() => {
+        set({
+          isLoading,
+        });
+      }, 200);
     }
   },
 }));
