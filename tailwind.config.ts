@@ -23,11 +23,14 @@ const config: Config = {
       },
       fontFamily: {
         roboto: ['var(--font-roboto)', 'sans-serif'],
-        special: ['var(--font-special-elite)', 'sans-serif'],
-        orbitron: ['var(--font-orbitron)', 'sans-serif'],
+        screen: ['var(--font-special-elite)', 'sans-serif'],
+        key: ['var(--font-orbitron)', 'sans-serif'],
       },
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };
 export default config;

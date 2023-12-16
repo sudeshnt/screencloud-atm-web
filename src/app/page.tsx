@@ -1,11 +1,9 @@
-import { Button } from '@chakra-ui/react';
+import Machine from '@/components/Machine';
 
 export default function Home() {
   return (
-    <section>
-      <Button variant='outline' colorScheme='blue'>
-        Button
-      </Button>
+    <section className='page'>
+      <Machine />
     </section>
   );
 }
