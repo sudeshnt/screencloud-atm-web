@@ -1,35 +1,36 @@
 import { validatePin } from '@/services';
-import { ATMState } from '@/types';
+import { ATMState, InputType } from '@/types';
 import { create } from 'zustand';
 
 const useATMStore = create<ATMState>((set, get) => ({
   pin: '',
   isAuthenticated: false,
   currentBalance: 0,
+  withdrawAmount: 0,
   isLoading: false,
   error: '',
   warning: '',
-  appendToPin: (digit: string) => {
+  appendInput: (key: InputType, digit: string) => {
     set((state) => {
-      const pin = state.pin;
+      const currentInput = state[key];
       return {
-        pin: pin.length < 4 ? `${state.pin}${digit}` : pin,
+        [key]: `${currentInput}${digit}`,
         error: '',
       };
     });
   },
-  deleteFromPin: () => {
+  deleteInput: (key: InputType) => {
     set((state) => {
-      const pin = state.pin;
+      const currentInput = state[key];
       return {
-        pin: pin.length ? state.pin.slice(0, -1) : pin,
+        [key]: String(currentInput).slice(0, -1),
         error: '',
       };
     });
   },
-  clearPin: () => {
+  clearInput: (key: InputType) => {
     set({
-      pin: '',
+      [key]: '',
       error: '',
     });
   },
@@ -68,7 +69,7 @@ const useATMStore = create<ATMState>((set, get) => ({
         set({
           isLoading,
         });
-      }, 200);
+      }, 600);
     }
   },
 }));

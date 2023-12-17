@@ -22,7 +22,8 @@ export default function HomeScreen() {
       <Text fontSize='xl'>Dear Customer, Your account balance is</Text>
       <Text fontSize='5xl'>{formatter.format(currentBalance)}</Text>
       <Button
-        colorScheme='blackAlpha'
+        className='hover:bg-gray-400 hover:shadow-xl'
+        colorScheme='black'
         variant='outline'
         fontSize='4xl'
         p={7}

@@ -7,6 +7,7 @@ export default function WithdrawPage() {
   return (
     <section className='page'>
       <Machine
+        inputType='withdrawAmount'
         screen={<WithdrawScreen />}
         onPressKey={(key) => console.log(key)}
         onPressEnter={() => console.log('enter')}

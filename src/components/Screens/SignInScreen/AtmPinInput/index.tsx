@@ -9,12 +9,12 @@ export default function AtmPinInput() {
   return (
     <VStack>
       <Text fontSize='3xl'>Welcome to SC-ATM</Text>
-      <HStack pt={4} pb={6}>
+      <HStack pt={4} pb={6} pointerEvents='none'>
         <PinInput size='lg' value={pin} errorBorderColor='red'>
-          <PinInputField readOnly />
-          <PinInputField readOnly />
-          <PinInputField readOnly />
-          <PinInputField readOnly />
+          <PinInputField className='placeholder:text-white' readOnly />
+          <PinInputField className='placeholder:text-white' readOnly />
+          <PinInputField className='placeholder:text-white' readOnly />
+          <PinInputField className='placeholder:text-white' readOnly />
         </PinInput>
       </HStack>
       <Text>Please enter your pin number</Text>

@@ -3,14 +3,20 @@
 import Machine from '@/components/Machine';
 import SignInScreen from '@/components/Screens/SignInScreen';
 import useATMStore from '@/store';
+import { InputType } from '@/types';
 import { useRouter } from 'next/navigation';
 
 export default function SignInPage() {
   const router = useRouter();
 
-  const { appendToPin, deleteFromPin, clearPin, validatePin, setLoading } = useATMStore(
-    (state) => state
-  );
+  const { pin, appendInput, deleteInput, clearInput, validatePin, setLoading } =
+    useATMStore((state) => state);
+
+  const handlePressKey = (inputType: InputType, digit: string) => {
+    if (pin.length < 4) {
+      appendInput(inputType, digit);
+    }
+  };
 
   const handlePressEnter = async () => {
     const isAuthenticated = await validatePin();
@@ -24,11 +30,12 @@ export default function SignInPage() {
   return (
     <section className='page'>
       <Machine
+        inputType='pin'
         screen={<SignInScreen />}
-        onPressKey={appendToPin}
+        onPressKey={handlePressKey}
         onPressEnter={handlePressEnter}
-        onPressClear={deleteFromPin}
-        onPressCancel={clearPin}
+        onPressClear={deleteInput}
+        onPressCancel={clearInput}
       />
     </section>
   );

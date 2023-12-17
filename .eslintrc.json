@@ -3,7 +3,7 @@
   "ignorePatterns": ["node_modules/**/*"],
   "extends": [
     "next/core-web-vitals",
-    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
     "plugin:prettier/recommended",
     "plugin:tailwindcss/recommended"

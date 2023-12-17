@@ -1,3 +1,6 @@
+/* eslint-disable tailwindcss/classnames-order  */
+/* eslint-disable prettier/prettier */
+
 import Loader from '@/components/Core/Loader';
 import useATMStore from '@/store';
 import { Alert, AlertIcon, Box, VStack } from '@chakra-ui/react';
@@ -13,7 +16,7 @@ export default function Screen({ children }: ScreenProps) {
   const warning = useATMStore((state) => state.warning);
 
   return (
-    <VStack className='font-screen h-full w-[400px] bg-[#abb280] p-6 text-black'>
+    <VStack className='font-screen h-full w-[400px] bg-[#848864] p-6 text-black drop-shadow-xl'>
       {isLoading ? (
         <Loader />
       ) : (
