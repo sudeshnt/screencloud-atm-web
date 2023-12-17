@@ -23,7 +23,7 @@ export default function MachineKey(props: MachineKeyProps) {
       {...buttonProps}
       {...(isActionButton ? ACTION_BUTTON_PROPS : { fontSize: '4xl' })}
     >
-      <Text className='font-key'>{label}</Text>
+      <Text className='font-machine'>{label}</Text>
     </Button>
   );
 }

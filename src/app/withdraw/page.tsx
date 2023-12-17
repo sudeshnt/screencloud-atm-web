@@ -6,14 +6,7 @@ import WithdrawScreen from '@/components/Screens/WithdrawScreen';
 export default function WithdrawPage() {
   return (
     <section className='page'>
-      <Machine
-        inputType='withdrawAmount'
-        screen={<WithdrawScreen />}
-        onPressKey={(key) => console.log(key)}
-        onPressEnter={() => console.log('enter')}
-        onPressClear={() => console.log('clear')}
-        onPressCancel={() => console.log('cancel')}
-      />
+      <Machine inputType='withdrawAmount' screen={<WithdrawScreen />} />
     </section>
   );
 }

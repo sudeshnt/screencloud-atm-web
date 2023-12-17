@@ -1,6 +1,7 @@
 'use client';
 
 import MachineKey from '@/components/Machine/MachineKey';
+import useATMStore from '@/store';
 import { InputType } from '@/types';
 import { Box, Grid, VStack } from '@chakra-ui/react';
 
@@ -8,21 +9,29 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
 
 export type KeyPadProps = {
   inputType?: InputType;
-  onPressKey: (key: InputType, digit: string) => void;
-  onPressEnter: () => void;
-  onPressClear: (key: InputType) => void;
-  onPressCancel: (key: InputType) => void;
+  onPressEnter?: () => void;
+  onPressKey?: (key: InputType, digit: string) => void;
+  onPressClear?: (key: InputType) => void;
+  onPressCancel?: (key: InputType) => void;
 };
 
 export default function KeyPad(props: KeyPadProps) {
-  const { inputType, onPressKey, onPressEnter, onPressClear, onPressCancel } = props;
+  const { appendInput, deleteInput, clearInput } = useATMStore((state) => state);
+
+  const {
+    inputType,
+    onPressEnter,
+    onPressKey = appendInput,
+    onPressClear = deleteInput,
+    onPressCancel = clearInput,
+  } = props;
 
   const handlePressDigit = (key: string) => {
     if (inputType) onPressKey(inputType, key);
   };
 
   const handlePressEnter = () => {
-    onPressEnter();
+    onPressEnter?.();
   };
 
   const handlePressClear = () => {

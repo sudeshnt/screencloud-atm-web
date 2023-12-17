@@ -69,7 +69,7 @@ const useATMStore = create<ATMState>((set, get) => ({
         set({
           isLoading,
         });
-      }, 600);
+      }, 500);
     }
   },
 }));

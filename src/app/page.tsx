@@ -9,8 +9,7 @@ import { useRouter } from 'next/navigation';
 export default function SignInPage() {
   const router = useRouter();
 
-  const { pin, appendInput, deleteInput, clearInput, validatePin, setLoading } =
-    useATMStore((state) => state);
+  const { pin, appendInput, validatePin, setLoading } = useATMStore((state) => state);
 
   const handlePressKey = (inputType: InputType, digit: string) => {
     if (pin.length < 4) {
@@ -20,9 +19,8 @@ export default function SignInPage() {
 
   const handlePressEnter = async () => {
     const isAuthenticated = await validatePin();
-
+    setLoading(false);
     if (isAuthenticated) {
-      setLoading(false);
       router.push('home');
     }
   };
@@ -34,8 +32,6 @@ export default function SignInPage() {
         screen={<SignInScreen />}
         onPressKey={handlePressKey}
         onPressEnter={handlePressEnter}
-        onPressClear={deleteInput}
-        onPressCancel={clearInput}
       />
     </section>
   );

@@ -24,7 +24,7 @@ const config: Config = {
       fontFamily: {
         roboto: ['var(--font-roboto)', 'sans-serif'],
         screen: ['var(--font-special-elite)', 'sans-serif'],
-        key: ['var(--font-orbitron)', 'sans-serif'],
+        machine: ['var(--font-orbitron)', 'sans-serif'],
       },
     },
   },

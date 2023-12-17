@@ -1,7 +1,10 @@
+import useATMStore from '@/store';
 import { Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react';
 import Screen from '../../Layout/Screen';
 
 export default function WithdrawScreen() {
+  const withdrawAmount = useATMStore((state) => state.withdrawAmount);
+
   return (
     <Screen>
       <Text fontSize='2xl'>Enter Amount to Withdraw</Text>
@@ -21,6 +24,7 @@ export default function WithdrawScreen() {
           fontSize='3xl'
           type='number'
           className='border-black placeholder:text-black'
+          value={withdrawAmount ?? ''}
         />
       </InputGroup>
     </Screen>
