@@ -14,8 +14,7 @@ export async function validatePin(pin: string): Promise<PinValidateResponse> {
         pin,
       }),
     });
-    const result = await res.json();
-    return result;
+    return await res.json();
   } catch (error) {
     throw new Error((error as Error).message);
   }

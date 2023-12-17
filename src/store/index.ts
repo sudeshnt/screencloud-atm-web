@@ -11,19 +11,23 @@ const useATMStore = create<ATMState>((set, get) => ({
   error: '',
   warning: '',
   appendInput: (key: InputType, digit: string) => {
-    set((state) => {
-      const currentInput = state[key];
-      return {
-        [key]: `${currentInput}${digit}`,
-        error: '',
-      };
-    });
+    const isInputValid = !isNaN(parseInt(digit));
+
+    if (isInputValid) {
+      set((state) => {
+        const currentInput = state[key];
+        return {
+          [key]: parseInt(`${currentInput}${digit}`),
+          error: '',
+        };
+      });
+    }
   },
   deleteInput: (key: InputType) => {
     set((state) => {
-      const currentInput = state[key];
+      const currentInput = String(state[key]);
       return {
-        [key]: String(currentInput).slice(0, -1),
+        [key]: currentInput.length > 1 ? parseInt(currentInput.slice(0, -1)) : '',
         error: '',
       };
     });
@@ -37,7 +41,7 @@ const useATMStore = create<ATMState>((set, get) => ({
   validatePin: async () => {
     let isAuthenticated = false;
     try {
-      const { pin } = get();
+      const pin = get().pin.toString();
 
       if (pin.length === 4) {
         set({ isLoading: true });

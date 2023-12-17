@@ -52,20 +52,20 @@ export default function KeyPad(props: KeyPadProps) {
       <VStack mt={4} gap={4}>
         <MachineKey
           isActionButton
-          label='Enter'
           colorScheme='green'
+          label='Enter'
           onClick={handlePressEnter}
         />
         <MachineKey
           isActionButton
-          label='Clear'
           colorScheme='yellow'
+          label='Clear'
           onClick={handlePressClear}
         />
         <MachineKey
           isActionButton
-          label='Cancel'
           colorScheme='red'
+          label='Cancel'
           onClick={handlePressCancel}
         />
       </VStack>

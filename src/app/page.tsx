@@ -12,14 +12,16 @@ export default function SignInPage() {
   const { pin, appendInput, validatePin, setLoading } = useATMStore((state) => state);
 
   const handlePressKey = (inputType: InputType, digit: string) => {
-    if (pin.length < 4) {
+    if (pin && pin.toString().length < 4) {
       appendInput(inputType, digit);
     }
   };
 
   const handlePressEnter = async () => {
     const isAuthenticated = await validatePin();
+
     setLoading(false);
+
     if (isAuthenticated) {
       router.push('home');
     }
