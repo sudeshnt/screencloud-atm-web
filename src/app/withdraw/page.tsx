@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 export default function WithdrawPage() {
   const router = useRouter();
 
-  const withdraw = useATMStore((state) => state.withdraw);
+  const { withdraw, setLoading } = useATMStore((state) => state);
 
   const handlePressEnter = () => {
     const result = withdraw();
@@ -16,6 +16,7 @@ export default function WithdrawPage() {
       const query = new URLSearchParams(result).toString();
       router.push(`success?${query}`);
     }
+    setLoading(false);
   };
 
   return (

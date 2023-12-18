@@ -5,6 +5,7 @@ export type ATMState = {
   isAuthenticated: boolean;
   currentBalance: number;
   withdrawAmount: number;
+  overdrawnAmount: number;
   isLoading: boolean;
   error: string;
   warning: string;

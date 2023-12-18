@@ -1,6 +1,6 @@
 'use client';
 
-import MachineKey from '@/components/Machine/MachineKey';
+import MachineButton from '@/components/Core/MachineButton';
 import { MACHINE_KEYS } from '@/configs';
 import useATMStore from '@/store';
 import { InputType } from '@/types';
@@ -54,23 +54,23 @@ export default function KeyPad(props: KeyPadProps) {
     <Box>
       <Grid gap={5} templateColumns='repeat(3, 1fr)'>
         {MACHINE_KEYS.map((key) => (
-          <MachineKey key={key} label={key} onClick={() => handlePressDigit(key)} />
+          <MachineButton key={key} label={key} onClick={() => handlePressDigit(key)} />
         ))}
       </Grid>
       <VStack mt={4} gap={4}>
-        <MachineKey
+        <MachineButton
           isActionButton
           colorScheme='green'
           label='Enter'
           onClick={handlePressEnter}
         />
-        <MachineKey
+        <MachineButton
           isActionButton
           colorScheme='yellow'
           label='Clear'
           onClick={handlePressClear}
         />
-        <MachineKey
+        <MachineButton
           isActionButton
           colorScheme='red'
           label='Cancel'

@@ -16,20 +16,20 @@ export default function Screen({ children }: ScreenProps) {
   const warning = useATMStore((state) => state.warning);
 
   return (
-    <VStack className='font-screen bg-digitalScreen h-full w-[400px] p-6 text-black drop-shadow-xl'>
+    <VStack className='h-full w-[400px] bg-digitalScreen p-6 font-screen text-black drop-shadow-xl'>
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <Box position='relative'>
             {error && (
-              <Alert status='error'>
+              <Alert position='relative' status='error'>
                 <AlertIcon />
                 {error}
               </Alert>
             )}
             {warning && (
-              <Alert status='warning'>
+              <Alert position='absolute' status='warning'>
                 <AlertIcon />
                 {warning}
               </Alert>

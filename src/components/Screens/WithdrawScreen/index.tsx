@@ -1,13 +1,19 @@
 import useATMStore from '@/store';
+import { formatPound } from '@/utils';
 import { Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react';
 import Screen from '../../Layout/Screen';
 
 export default function WithdrawScreen() {
-  const withdrawAmount = useATMStore((state) => state.withdrawAmount);
+  const { withdrawAmount, currentBalance } = useATMStore((state) => state);
 
   return (
     <Screen>
-      <Text fontSize='2xl'>Enter Amount to Withdraw</Text>
+      <Text fontSize='3xl'>Hi Michael</Text>
+      <Text fontSize='xl'>Your current balance is</Text>
+      <Text fontSize='5xl'>{formatPound(currentBalance)}</Text>
+      <Text fontSize='2xl' mt={12}>
+        Enter Amount to Withdraw
+      </Text>
       <InputGroup pointerEvents='none'>
         <InputLeftElement
           pointerEvents='none'

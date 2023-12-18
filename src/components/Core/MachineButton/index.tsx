@@ -11,7 +11,7 @@ type MachineKeyProps = ButtonProps & {
   isActionButton?: boolean;
 };
 
-export default function MachineKey(props: MachineKeyProps) {
+export default function MachineButton(props: MachineKeyProps) {
   const { label, isActionButton, colorScheme = 'grey', ...buttonProps } = props;
   const backgroundColor = colorScheme === 'grey' ? 'bg-gray-700' : '';
 

@@ -15,6 +15,7 @@ const useATMStore = create<ATMState>((set, get) => ({
   isAuthenticated: false,
   currentBalance: 0,
   withdrawAmount: 0,
+  overdrawnAmount: 0,
   atmVault: ATM_VAULT,
   isLoading: false,
   error: '',
@@ -90,10 +91,16 @@ const useATMStore = create<ATMState>((set, get) => ({
       isLoading: true,
     });
 
-    if (withdrawAmount > atmVaultBalance + MAX_OVERDRAW) {
+    if (withdrawAmount > currentBalance + MAX_OVERDRAW) {
       set({
-        error: 'Insufficient funds and exceeded overdraft limit.',
-        isLoading: false,
+        error: 'Insufficient balance in the account and exceeded overdraft limit.',
+      });
+      return null;
+    }
+
+    if (withdrawAmount > atmVaultBalance) {
+      set({
+        error: 'Insufficient funds in the ATM.',
       });
       return null;
     }
@@ -103,23 +110,25 @@ const useATMStore = create<ATMState>((set, get) => ({
     if (isEmpty(notesToDispense)) {
       set({
         error: 'Insufficient funds or available notes to dispense.',
-        isLoading: false,
       });
       return null;
     }
 
     const updatedATMVault = getUpdatedATMVault(atmVault, notesToDispense);
     const updatedCurrentBalance = currentBalance - withdrawAmount;
+    const overdrawnAmount = Math.max(0, withdrawAmount - currentBalance);
 
     set({
       atmVault: updatedATMVault,
       currentBalance: updatedCurrentBalance,
-      isLoading: false,
+      overdrawnAmount,
+      withdrawAmount: 0,
     });
 
     return {
       withdrawAmount: formatPound(withdrawAmount),
       notes: JSON.stringify(notesToDispense),
+      overdrawnAmount,
     };
   },
   resetAtm: () => {
@@ -128,6 +137,7 @@ const useATMStore = create<ATMState>((set, get) => ({
       isAuthenticated: false,
       currentBalance: 0,
       withdrawAmount: 0,
+      overdrawnAmount: 0,
       error: '',
       warning: '',
     });
