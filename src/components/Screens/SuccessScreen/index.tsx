@@ -17,7 +17,7 @@ export default function SuccessScreen(props: SuccessScreenProps) {
   const { withdrawAmount, overdrawnAmount, notes = {} } = props;
 
   const handlePressWithdrawAgain = () => {
-    router.replace('withdraw');
+    router.replace('home');
   };
 
   return (

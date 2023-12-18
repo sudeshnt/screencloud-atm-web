@@ -11,12 +11,15 @@ import isEmpty from 'lodash/isEmpty';
 import { create } from 'zustand';
 
 const useATMStore = create<ATMState>((set, get) => ({
-  pin: '',
-  isAuthenticated: false,
-  currentBalance: 0,
-  withdrawAmount: 0,
-  overdrawnAmount: 0,
   atmVault: ATM_VAULT,
+  pin: '',
+  user: {
+    isAuthenticated: false,
+    name: '',
+    currentBalance: 0,
+    overdrawnAmount: 0,
+  },
+  withdrawAmount: 0,
   isLoading: false,
   error: '',
   warning: '',
@@ -70,9 +73,13 @@ const useATMStore = create<ATMState>((set, get) => ({
         isAuthenticated = !response.error && response.currentBalance != null;
 
         set({
+          user: {
+            isAuthenticated,
+            name: 'Michael',
+            currentBalance: response.currentBalance ?? 0,
+            overdrawnAmount: 0,
+          },
           pin: isAuthenticated ? '' : pin,
-          isAuthenticated,
-          currentBalance: response.currentBalance,
           error: response.error,
         });
       }
@@ -84,8 +91,9 @@ const useATMStore = create<ATMState>((set, get) => ({
     }
   },
   withdraw: () => {
-    const { atmVault, withdrawAmount, currentBalance } = get();
+    const { atmVault, withdrawAmount, user } = get();
     const atmVaultBalance = calculateATMVaultBalance(atmVault);
+    const currentBalance = user.currentBalance;
 
     set({
       isLoading: true,
@@ -120,8 +128,11 @@ const useATMStore = create<ATMState>((set, get) => ({
 
     set({
       atmVault: updatedATMVault,
-      currentBalance: updatedCurrentBalance,
-      overdrawnAmount,
+      user: {
+        ...user,
+        currentBalance: updatedCurrentBalance,
+        overdrawnAmount,
+      },
       withdrawAmount: 0,
     });
 
@@ -134,10 +145,13 @@ const useATMStore = create<ATMState>((set, get) => ({
   resetAtm: () => {
     set({
       atmVault: ATM_VAULT,
-      isAuthenticated: false,
-      currentBalance: 0,
+      user: {
+        isAuthenticated: false,
+        name: '',
+        currentBalance: 0,
+        overdrawnAmount: 0,
+      },
       withdrawAmount: 0,
-      overdrawnAmount: 0,
       error: '',
       warning: '',
     });
@@ -152,7 +166,7 @@ const useATMStore = create<ATMState>((set, get) => ({
         set({
           isLoading,
         });
-      }, 500);
+      }, 1000);
     }
   },
 }));

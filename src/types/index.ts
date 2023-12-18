@@ -1,15 +1,13 @@
 // eslint-disable no-unused-vars
 
 export type ATMState = {
+  atmVault: CurrencyStack[];
   pin: string;
-  isAuthenticated: boolean;
-  currentBalance: number;
+  user: User;
   withdrawAmount: number;
-  overdrawnAmount: number;
-  isLoading: boolean;
   error: string;
   warning: string;
-  atmVault: CurrencyStack[];
+  isLoading: boolean;
   appendInput: (key: InputType, digit: string) => void;
   deleteInput: (key: InputType) => void;
   clearInput: (key: InputType) => void;
@@ -24,6 +22,13 @@ export type InputType = keyof Pick<ATMState, 'pin' | 'withdrawAmount'>;
 export type PinValidateResponse = {
   currentBalance?: number;
   error?: string;
+};
+
+export type User = {
+  isAuthenticated: boolean;
+  name: string;
+  currentBalance: number;
+  overdrawnAmount: number;
 };
 
 export type CurrencyStack = {
