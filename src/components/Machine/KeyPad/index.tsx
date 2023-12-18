@@ -4,7 +4,7 @@ import MachineButton from '@/components/Core/MachineButton';
 import { MACHINE_KEYS } from '@/configs';
 import useATMStore from '@/store';
 import { InputType } from '@/types';
-import { Box, Grid, VStack } from '@chakra-ui/react';
+import { Box, Grid, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 
 export type KeyPadProps = {
@@ -12,7 +12,6 @@ export type KeyPadProps = {
   onPressEnter?: () => void;
   onPressKey?: (key: InputType, digit: string) => void;
   onPressClear?: (key: InputType) => void;
-  onPressCancel?: (key: InputType) => void;
 };
 
 export default function KeyPad(props: KeyPadProps) {
@@ -26,7 +25,6 @@ export default function KeyPad(props: KeyPadProps) {
     onPressEnter,
     onPressKey = appendInput,
     onPressClear = deleteInput,
-    onPressCancel = clearInput,
   } = props;
 
   const handlePressDigit = (key: string) => {
@@ -42,8 +40,8 @@ export default function KeyPad(props: KeyPadProps) {
   };
 
   const handlePressCancel = () => {
-    if (inputType) {
-      onPressCancel(inputType);
+    if (inputType === 'pin') {
+      clearInput(inputType);
     } else {
       resetAtm();
       router.push('/');
@@ -76,6 +74,9 @@ export default function KeyPad(props: KeyPadProps) {
           label='Cancel'
           onClick={handlePressCancel}
         />
+        <Text mt={-2} color='CaptionText' fontSize='smaller'>
+          press cancel to logout & reset the atm
+        </Text>
       </VStack>
     </Box>
   );

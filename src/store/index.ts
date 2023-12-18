@@ -37,6 +37,7 @@ const useATMStore = create<ATMState>((set, get) => ({
               ? parseInt(updatedInput)
               : updatedInput,
           error: '',
+          warning: '',
         };
       });
     }
@@ -52,6 +53,7 @@ const useATMStore = create<ATMState>((set, get) => ({
             ? parseInt(updatedInput)
             : updatedInput,
         error: '',
+        warning: '',
       };
     });
   },
@@ -59,6 +61,7 @@ const useATMStore = create<ATMState>((set, get) => ({
     set({
       [key]: '',
       error: '',
+      warning: '',
     });
   },
   validatePin: async () => {
@@ -94,6 +97,13 @@ const useATMStore = create<ATMState>((set, get) => ({
     const { atmVault, withdrawAmount, user } = get();
     const atmVaultBalance = calculateATMVaultBalance(atmVault);
     const currentBalance = user.currentBalance;
+
+    if (!withdrawAmount) {
+      set({
+        warning: 'Please enter withdraw amount.',
+      });
+      return null;
+    }
 
     set({
       isLoading: true,

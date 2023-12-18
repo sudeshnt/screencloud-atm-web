@@ -4,20 +4,29 @@
 import Loader from '@/components/Core/Loader';
 import useATMStore from '@/store';
 import { Alert, AlertIcon, Box, VStack } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { redirect, usePathname } from 'next/navigation';
+import { ReactNode, useLayoutEffect } from 'react';
 
 type ScreenProps = {
   children: ReactNode;
 };
 
 export default function Screen({ children }: ScreenProps) {
-  const isLoading = useATMStore((state) => state.isLoading);
-  const error = useATMStore((state) => state.error);
-  const warning = useATMStore((state) => state.warning);
+  const pathName = usePathname();
+  const { isLoading, error, warning, user } = useATMStore((state) => state);
+
+  const authenticatingForProtectedPath = pathName !== '/' && !user.isAuthenticated;
+  const shouldShowLoader = isLoading || authenticatingForProtectedPath;
+
+  useLayoutEffect(() => {
+    if (!user.isAuthenticated && pathName !== '/') {
+      redirect('/');
+    }
+  }, [pathName, user.isAuthenticated]);
 
   return (
     <VStack className='h-full w-[400px] bg-digitalScreen p-4 font-screen text-black drop-shadow-xl'>
-      {isLoading ? (
+      {shouldShowLoader ? (
         <Loader />
       ) : (
         <>
@@ -29,7 +38,7 @@ export default function Screen({ children }: ScreenProps) {
               </Alert>
             )}
             {warning && (
-              <Alert position='absolute' status='warning'>
+              <Alert position='relative' status='warning'>
                 <AlertIcon />
                 {warning}
               </Alert>

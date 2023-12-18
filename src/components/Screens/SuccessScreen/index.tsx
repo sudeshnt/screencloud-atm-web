@@ -2,9 +2,10 @@ import CurrencyStack from '@/components/Core/CurrencyStack';
 import ScreenButton from '@/components/Core/ScreenButton';
 import { MAX_OVERDRAW } from '@/configs';
 import useATMStore from '@/store';
-import { formatPound } from '@/utils';
+import { calculateATMVaultBalance, formatPound } from '@/utils';
 import { Alert, AlertIcon, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
+import { useMemo } from 'react';
 import Screen from '../../Layout/Screen';
 
 type SuccessScreenProps = {
@@ -16,8 +17,10 @@ export default function SuccessScreen(props: SuccessScreenProps) {
   const router = useRouter();
   const { withdrawAmount, notes = {} } = props;
 
-  const { user } = useATMStore((state) => state);
+  const { user, atmVault } = useATMStore((state) => state);
   const { currentBalance, overdrawnAmount } = user;
+
+  const atmVaultBalance = useMemo(() => calculateATMVaultBalance(atmVault), [atmVault]);
 
   const handlePressWithdrawAgain = () => {
     router.replace('home');
@@ -52,11 +55,11 @@ export default function SuccessScreen(props: SuccessScreenProps) {
           You have overdrawn an amount of {formatPound(overdrawnAmount)} from your account
         </Alert>
       ) : null}
-      {overdrawnAmount < MAX_OVERDRAW ? (
+      {overdrawnAmount < MAX_OVERDRAW && atmVaultBalance > 0 ? (
         <ScreenButton
           variant='ghost'
           fontSize='lg'
-          mt={2}
+          mt={1}
           onClick={handlePressWithdrawAgain}
         >
           Make another withdrawal
