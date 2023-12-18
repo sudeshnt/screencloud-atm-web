@@ -1,12 +1,8 @@
 import useATMStore from '@/store';
+import { formatPound } from '@/utils';
 import { Button, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import Screen from '../../Layout/Screen';
-
-const formatter = new Intl.NumberFormat('en-EU', {
-  style: 'currency',
-  currency: 'EUR',
-});
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -19,8 +15,9 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Text fontSize='xl'>Dear Customer, Your account balance is</Text>
-      <Text fontSize='5xl'>{formatter.format(currentBalance)}</Text>
+      <Text fontSize='3xl'>Hi Michael</Text>
+      <Text fontSize='xl'>Your account balance is</Text>
+      <Text fontSize='5xl'>{formatPound(currentBalance)}</Text>
       <Button
         className='hover:bg-gray-400 hover:shadow-xl'
         colorScheme='black'

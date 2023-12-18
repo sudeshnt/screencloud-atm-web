@@ -15,7 +15,7 @@ export default function WithdrawScreen() {
           left={2}
           fontSize='5xl'
           // eslint-disable-next-line react/no-children-prop
-          children='€'
+          children='£'
         />
         <Input
           h={16}
@@ -25,6 +25,7 @@ export default function WithdrawScreen() {
           type='number'
           className='border-black placeholder:text-black'
           value={withdrawAmount ?? ''}
+          readOnly
         />
       </InputGroup>
     </Screen>

@@ -17,6 +17,7 @@ const config: Config = {
         primary: '#4722c9',
         secondary: '#9d8dbd',
         primaryBackground: '#1b1437',
+        digitalScreen: '#848864',
       },
       backgroundImage: {
         site: 'url("/images/site-bg.svg")',

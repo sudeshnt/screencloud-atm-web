@@ -1,11 +1,11 @@
 'use client';
 
 import MachineKey from '@/components/Machine/MachineKey';
+import { MACHINE_KEYS } from '@/configs';
 import useATMStore from '@/store';
 import { InputType } from '@/types';
 import { Box, Grid, VStack } from '@chakra-ui/react';
-
-const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
+import { useRouter } from 'next/navigation';
 
 export type KeyPadProps = {
   inputType?: InputType;
@@ -16,7 +16,10 @@ export type KeyPadProps = {
 };
 
 export default function KeyPad(props: KeyPadProps) {
-  const { appendInput, deleteInput, clearInput } = useATMStore((state) => state);
+  const router = useRouter();
+  const { appendInput, deleteInput, clearInput, resetAtm } = useATMStore(
+    (state) => state
+  );
 
   const {
     inputType,
@@ -39,13 +42,18 @@ export default function KeyPad(props: KeyPadProps) {
   };
 
   const handlePressCancel = () => {
-    if (inputType) onPressCancel(inputType);
+    if (inputType) {
+      onPressCancel(inputType);
+    } else {
+      resetAtm();
+      router.push('/');
+    }
   };
 
   return (
     <Box>
       <Grid gap={5} templateColumns='repeat(3, 1fr)'>
-        {KEYS.map((key) => (
+        {MACHINE_KEYS.map((key) => (
           <MachineKey key={key} label={key} onClick={() => handlePressDigit(key)} />
         ))}
       </Grid>

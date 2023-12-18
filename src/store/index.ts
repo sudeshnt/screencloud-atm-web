@@ -1,5 +1,13 @@
+import { ATM_VAULT, MAX_OVERDRAW, PIN_LENGTH } from '@/configs';
 import { validatePin } from '@/services';
 import { ATMState, InputType } from '@/types';
+import {
+  calculateATMVaultBalance,
+  dispenseNotes,
+  formatPound,
+  getUpdatedATMVault,
+} from '@/utils';
+import isEmpty from 'lodash/isEmpty';
 import { create } from 'zustand';
 
 const useATMStore = create<ATMState>((set, get) => ({
@@ -7,6 +15,7 @@ const useATMStore = create<ATMState>((set, get) => ({
   isAuthenticated: false,
   currentBalance: 0,
   withdrawAmount: 0,
+  atmVault: ATM_VAULT,
   isLoading: false,
   error: '',
   warning: '',
@@ -16,8 +25,13 @@ const useATMStore = create<ATMState>((set, get) => ({
     if (isInputValid) {
       set((state) => {
         const currentInput = state[key];
+        const updatedInput = `${currentInput}${digit}`;
+
         return {
-          [key]: parseInt(`${currentInput}${digit}`),
+          [key]:
+            key === 'withdrawAmount' && !isNaN(parseInt(updatedInput))
+              ? parseInt(updatedInput)
+              : updatedInput,
           error: '',
         };
       });
@@ -26,8 +40,13 @@ const useATMStore = create<ATMState>((set, get) => ({
   deleteInput: (key: InputType) => {
     set((state) => {
       const currentInput = String(state[key]);
+      const updatedInput = currentInput.length > 1 ? currentInput.slice(0, -1) : '';
+
       return {
-        [key]: currentInput.length > 1 ? parseInt(currentInput.slice(0, -1)) : '',
+        [key]:
+          key === 'withdrawAmount' && !isNaN(parseInt(updatedInput))
+            ? parseInt(updatedInput)
+            : updatedInput,
         error: '',
       };
     });
@@ -41,9 +60,9 @@ const useATMStore = create<ATMState>((set, get) => ({
   validatePin: async () => {
     let isAuthenticated = false;
     try {
-      const pin = get().pin.toString();
+      const pin = get().pin;
 
-      if (pin.length === 4) {
+      if (pin.length === PIN_LENGTH) {
         set({ isLoading: true });
 
         const response = await validatePin(pin);
@@ -62,6 +81,56 @@ const useATMStore = create<ATMState>((set, get) => ({
       set({ isLoading: false });
       return isAuthenticated;
     }
+  },
+  withdraw: () => {
+    const { atmVault, withdrawAmount, currentBalance } = get();
+    const atmVaultBalance = calculateATMVaultBalance(atmVault);
+
+    set({
+      isLoading: true,
+    });
+
+    if (withdrawAmount > atmVaultBalance + MAX_OVERDRAW) {
+      set({
+        error: 'Insufficient funds and exceeded overdraft limit.',
+        isLoading: false,
+      });
+      return null;
+    }
+
+    const notesToDispense = dispenseNotes(atmVault, withdrawAmount);
+
+    if (isEmpty(notesToDispense)) {
+      set({
+        error: 'Insufficient funds or available notes to dispense.',
+        isLoading: false,
+      });
+      return null;
+    }
+
+    const updatedATMVault = getUpdatedATMVault(atmVault, notesToDispense);
+    const updatedCurrentBalance = currentBalance - withdrawAmount;
+
+    set({
+      atmVault: updatedATMVault,
+      currentBalance: updatedCurrentBalance,
+      isLoading: false,
+    });
+
+    return {
+      withdrawAmount: formatPound(withdrawAmount),
+      notes: JSON.stringify(notesToDispense),
+    };
+  },
+  resetAtm: () => {
+    set({
+      atmVault: ATM_VAULT,
+      isAuthenticated: false,
+      currentBalance: 0,
+      withdrawAmount: 0,
+      error: '',
+      warning: '',
+    });
   },
   setLoading: (isLoading: boolean) => {
     if (isLoading) {

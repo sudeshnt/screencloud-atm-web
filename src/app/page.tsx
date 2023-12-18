@@ -2,6 +2,7 @@
 
 import Machine from '@/components/Machine';
 import SignInScreen from '@/components/Screens/SignInScreen';
+import { PIN_LENGTH } from '@/configs';
 import useATMStore from '@/store';
 import { InputType } from '@/types';
 import { useRouter } from 'next/navigation';
@@ -12,7 +13,7 @@ export default function SignInPage() {
   const { pin, appendInput, validatePin, setLoading } = useATMStore((state) => state);
 
   const handlePressKey = (inputType: InputType, digit: string) => {
-    if (pin && pin.toString().length < 4) {
+    if (pin.length < PIN_LENGTH) {
       appendInput(inputType, digit);
     }
   };
