@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <header className='flex justify-center px-[8%] py-8'>
+    <header className='flex justify-center px-[8%]'>
       <nav>
         <Link href='/'>
           <HStack alignItems='center'>

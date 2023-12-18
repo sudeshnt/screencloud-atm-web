@@ -1,4 +1,5 @@
 import { CurrencyStack as CurrencyStackProps } from '@/types';
+import { formatPound } from '@/utils';
 import { HStack, Text } from '@chakra-ui/react';
 import NoteIcon from '../NoteIcon';
 
@@ -14,7 +15,7 @@ export default function CurrencyStack(props: CurrencyStackProps) {
         </Text>
         <HStack justify='space-between' w='80px'>
           <Text>=</Text>
-          <Text>{value * notes}</Text>
+          <Text>{formatPound(value * notes)}</Text>
         </HStack>
       </HStack>
     </HStack>

@@ -4,7 +4,7 @@
 
 @layer base {
   .page {
-    @apply flex h-full w-full flex-col items-center pt-2;
+    @apply flex h-full w-full flex-col items-center pt-4;
   }
 
   .hide-scrollbar::-webkit-scrollbar {

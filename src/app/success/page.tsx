@@ -10,7 +10,6 @@ export default function SuccessPage() {
 
   const notes = params.get('notes');
   const withdrawAmount = params.get('withdrawAmount');
-  const overdrawnAmount = params.get('overdrawnAmount');
 
   const notesObject: Record<string, string> | null = useMemo(() => {
     if (notes) {
@@ -26,13 +25,7 @@ export default function SuccessPage() {
   return (
     <section className='page'>
       <Machine
-        screen={
-          <SuccessScreen
-            withdrawAmount={withdrawAmount}
-            overdrawnAmount={overdrawnAmount ? parseInt(overdrawnAmount) : 0}
-            notes={notesObject}
-          />
-        }
+        screen={<SuccessScreen withdrawAmount={withdrawAmount} notes={notesObject} />}
       />
     </section>
   );

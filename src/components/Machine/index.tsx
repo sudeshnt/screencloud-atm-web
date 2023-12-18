@@ -14,9 +14,9 @@ export default function Machine(props: MachineProps) {
     <VStack>
       <Box className='flex flex-row gap-5 rounded-lg bg-slate-300 p-8'>
         <Box>{screen}</Box>
-        <Box>
+        <VStack justify='center'>
           <KeyPad {...keypadProps} />
-        </Box>
+        </VStack>
       </Box>
       <ATMInsight />
     </VStack>

@@ -139,7 +139,6 @@ const useATMStore = create<ATMState>((set, get) => ({
     return {
       withdrawAmount: formatPound(withdrawAmount),
       notes: JSON.stringify(notesToDispense),
-      overdrawnAmount,
     };
   },
   resetAtm: () => {

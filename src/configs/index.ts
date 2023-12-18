@@ -8,4 +8,4 @@ export const ATM_VAULT = [
   { value: 20, notes: 7 },
 ];
 
-export const MAX_OVERDRAW = 1000;
+export const MAX_OVERDRAW = 100;

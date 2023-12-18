@@ -14,7 +14,7 @@ export default function HomeScreen() {
       <Text fontSize='2xl' mt={12}>
         Enter Amount to Withdraw
       </Text>
-      <InputGroup pointerEvents='none'>
+      <InputGroup pointerEvents='none' w='325px'>
         <InputLeftElement
           pointerEvents='none'
           mt={4}
