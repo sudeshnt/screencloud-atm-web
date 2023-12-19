@@ -4,15 +4,15 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 </div>
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="public/images/screencloud.png" alt="Logo" height="130" >
-
-  <a href="">
-    <img src="public/images/logo.svg" alt="Logo" height="150px"  >
-  </a>
+  <div>
+    <img src="public/images/screencloud.png" alt="Logo" height="150" >
+  </div>
+  <div style="margin-top: -70px;">
+    <img src="public/images/logo.svg" alt="Logo" height="150px">
+  </div>
   <p align="center">
     <a href="https://screencloud-atm-web.vercel.app" target=”_blank”><strong>View Frontend Demo »</strong></a>
     <br />
@@ -48,24 +48,30 @@
 ### Screenshots
 
 <div align="center">
-  <img src="sales-report-client/public/screenshots/1.png" alt="Logo" height="360">
+  <img src="public/app-screenshots/1.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/2.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/3.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/4.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/5.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/6.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/7.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/8.png" alt="Logo" height="200">
+  <img src="public/app-screenshots/9.png" alt="Logo" height="200">
 </div>
 <br />
 
 ### In this Application you have the ability to
 
-- Compare yearly sales reports of a company within a range of years.
-- By default it will show the sales report comparison from year 2003 to 2022.
-- You can pick the `from - to` range from the section above.
-- Once you selected a specific range, the body will be updated to show the sales report comparison for the given range.
-- Yearly report has sales values for each month of the year.
-- Each report will give you some valuable insight of the company such as,
-  - Total sales value
-  - Growth of sales value compared to last year
-  - Gap between the budget and the achieved sales value, and gap's growth compared to last year
-  - Cost of sales and it's distribution
-  - Profit gained from the sales for each month after the cost, and it's margin percentage
-  - Total budget planned for each month and and the percentage achieved
+- Log into the ATM with the correct pin `1111`.
+- Once logged in you'll be taken to the home page, which shows the account balance.
+- You are allowed to withdraw an amount of `Your Account Balance + Overdraw Limit(£100)` max
+- Once you submit the withdrawal, ATM will validate the amount to make sure if it's dispensable with the current balance in ATM Vault.
+- If it's not dispensable, it'll show you the reason as an error message.
+- If it's dispensable, It'll take you to the success screen to hand you over the currency notes.
+- In the success screen you can see
+  - The updated balance in your account
+  - Warning message, if you have overdrawn from your account.
+  - Button to make another withdrawal, only if your account balance and the ATM vault balance allows.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -128,6 +134,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser
 ```js
 npm run test
 ```
+
+<img src="public/app-screenshots/test-coverage.png" alt="Logo" height="300">
 
 6. Builds the apps for production to the build folder.
 
