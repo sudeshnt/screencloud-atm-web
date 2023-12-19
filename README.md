@@ -64,14 +64,15 @@
 
 - Log into the ATM with the correct pin `1111`.
 - Once logged in you'll be taken to the home page, which shows the account balance.
-- You are allowed to withdraw an amount of `Your Account Balance + Overdraw Limit(£100)` max
-- Once you submit the withdrawal, ATM will validate the amount to make sure if it's dispensable with the current balance in ATM Vault.
-- If it's not dispensable, it'll show you the reason as an error message.
+- You are allowed to withdraw an amount of `Your Account Balance + Overdraw Limit(£100)` maximum.
+- Once you submit the withdrawal, ATM will validate the amount to make sure if it's dispensable with the notes available in ATM Vault.
+- If it's not dispensable, it'll show you an error message with the reason.
 - If it's dispensable, It'll take you to the success screen to hand you over the currency notes.
 - In the success screen you can see
   - The updated balance in your account
   - Warning message, if you have overdrawn from your account.
   - Button to make another withdrawal, only if your account balance and the ATM vault balance allows.
+- You can see the inside details of the ATM at anytime by toggling the `ATM Insights` accordion at the bottom of the ATM.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
