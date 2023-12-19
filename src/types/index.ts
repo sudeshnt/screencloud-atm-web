@@ -1,4 +1,5 @@
 // eslint-disable no-unused-vars
+import { WithdrawErrorCodes } from '@/configs';
 
 export type ATMState = {
   atmVault: CurrencyStack[];
@@ -46,4 +47,9 @@ export type WithdrawObject = {
 export type Note = {
   value: number;
   notes: number;
+};
+
+export type dispenseReturnType = {
+  notes?: Record<string, number> | null;
+  errorCode?: WithdrawErrorCodes;
 };

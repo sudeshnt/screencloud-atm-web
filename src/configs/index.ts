@@ -9,3 +9,26 @@ export const ATM_VAULT = [
 ];
 
 export const MAX_OVERDRAW = 100;
+
+export enum WithdrawErrorCodes {
+  INVALID_WITHDRAW_AMOUNT,
+  INSUFFICIENT_ACCOUNT_BALANCE,
+  INSUFFICIENT_ATM_BALANCE,
+  INSUFFICIENT_CURRENCY_NOTES_TO_DISPENSE,
+  DEFAULT,
+}
+
+export const WithdrawErrorMessages: Record<WithdrawErrorCodes, string> = {
+  [WithdrawErrorCodes.INVALID_WITHDRAW_AMOUNT]: 'Please input valid withdraw amount.',
+  [WithdrawErrorCodes.INSUFFICIENT_ACCOUNT_BALANCE]:
+    'Insufficient account balance and exceeded overdraft limit.',
+  [WithdrawErrorCodes.INSUFFICIENT_ATM_BALANCE]: 'Insufficient funds in the ATM.',
+  [WithdrawErrorCodes.INSUFFICIENT_CURRENCY_NOTES_TO_DISPENSE]:
+    'Unavailable notes to dispense requested amount.',
+  [WithdrawErrorCodes.DEFAULT]: 'Cannot dispense requested amount at this moment.',
+};
+
+export enum SkipRoundsForNotes {
+  'FIVE' = 5,
+  'TWENTY' = 1,
+}

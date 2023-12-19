@@ -1,13 +1,13 @@
-import { ATM_VAULT, MAX_OVERDRAW, PIN_LENGTH } from '@/configs';
+import {
+  ATM_VAULT,
+  MAX_OVERDRAW,
+  PIN_LENGTH,
+  WithdrawErrorCodes,
+  WithdrawErrorMessages,
+} from '@/configs';
 import { validatePin } from '@/services';
 import { ATMState, InputType } from '@/types';
-import {
-  calculateATMVaultBalance,
-  dispenseNotes,
-  formatPound,
-  getUpdatedATMVault,
-} from '@/utils';
-import isEmpty from 'lodash/isEmpty';
+import { dispenseNotes, formatPound, getUpdatedATMVault } from '@/utils';
 import { create } from 'zustand';
 
 const useATMStore = create<ATMState>((set, get) => ({
@@ -95,19 +95,7 @@ const useATMStore = create<ATMState>((set, get) => ({
   },
   withdraw: () => {
     const { atmVault, withdrawAmount, user } = get();
-    const atmVaultBalance = calculateATMVaultBalance(atmVault);
     const currentBalance = user.currentBalance;
-
-    if (!withdrawAmount) {
-      set({
-        warning: 'Please enter withdraw amount.',
-      });
-      return null;
-    }
-
-    set({
-      isLoading: true,
-    });
 
     if (withdrawAmount > currentBalance + MAX_OVERDRAW) {
       set({
@@ -116,23 +104,21 @@ const useATMStore = create<ATMState>((set, get) => ({
       return null;
     }
 
-    if (withdrawAmount > atmVaultBalance) {
-      set({
-        error: 'Insufficient funds in the ATM.',
-      });
-      return null;
-    }
+    set({
+      isLoading: true,
+    });
 
     const notesToDispense = dispenseNotes(atmVault, withdrawAmount);
 
-    if (isEmpty(notesToDispense)) {
+    if (notesToDispense.errorCode || !notesToDispense.notes) {
       set({
-        error: 'Insufficient funds or available notes to dispense.',
+        error:
+          WithdrawErrorMessages[notesToDispense.errorCode ?? WithdrawErrorCodes.DEFAULT],
       });
       return null;
     }
 
-    const updatedATMVault = getUpdatedATMVault(atmVault, notesToDispense);
+    const updatedATMVault = getUpdatedATMVault(atmVault, notesToDispense.notes);
     const updatedCurrentBalance = currentBalance - withdrawAmount;
     const overdrawnAmount = Math.max(0, withdrawAmount - currentBalance);
 
@@ -148,7 +134,7 @@ const useATMStore = create<ATMState>((set, get) => ({
 
     return {
       withdrawAmount: formatPound(withdrawAmount),
-      notes: JSON.stringify(notesToDispense),
+      notes: JSON.stringify(notesToDispense.notes),
     };
   },
   resetAtm: () => {
