@@ -38,7 +38,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       >
         <TopLeftImg />
         <Header />
-        <main className='hide-scrollbar h-[calc(100vh-200px)] overflow-scroll px-[8%]'>
+        <main className='hide-scrollbar h-[calc(100vh-150px)] overflow-scroll px-[8%]'>
           <Providers>{children}</Providers>
         </main>
       </body>

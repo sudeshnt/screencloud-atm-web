@@ -39,9 +39,11 @@ export default function ATMInsight() {
             textColor='black'
           >
             <Box mt={-6}>
-              {atmVault.map((cash) => (
-                <CurrencyStack key={cash.value} {...cash} />
-              ))}
+              {atmVault
+                .sort((a, b) => b.value - a.value)
+                .map((cash) => (
+                  <CurrencyStack key={cash.value} {...cash} />
+                ))}
             </Box>
             <VStack alignItems='flex-end' justify='flex-end' textAlign='right'>
               <Text>ATM balance</Text>

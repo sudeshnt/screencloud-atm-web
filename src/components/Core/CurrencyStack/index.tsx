@@ -13,7 +13,7 @@ export default function CurrencyStack(props: CurrencyStackProps) {
         <Text textAlign='start' w='70px'>
           x {notes}
         </Text>
-        <HStack justify='space-between' w='80px'>
+        <HStack justify='space-between' w='120px'>
           <Text>=</Text>
           <Text>{formatPound(value * notes)}</Text>
         </HStack>
