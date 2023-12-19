@@ -1,7 +1,7 @@
-import { SkipRoundsForNotes, WithdrawErrorCodes } from '@/configs';
 import { ATM_VAULT, dispenseReturnType } from '@/types';
-import deepCOpy from 'lodash/cloneDeep';
+import deepCopy from 'lodash/cloneDeep';
 import count from 'lodash/countBy';
+import { SkipRoundsForNotes, WithdrawErrorCodes } from '../configs';
 
 export const formatPound = new Intl.NumberFormat('en-UK', {
   style: 'currency',
@@ -106,11 +106,14 @@ export function getUpdatedATMVault(
   atmVault: ATM_VAULT,
   notesDispensed: Record<string, number>
 ): ATM_VAULT {
-  const copyOfAtmVault = deepCOpy(atmVault);
+  const copyOfAtmVault = deepCopy(atmVault);
   for (const note in notesDispensed) {
     const index = atmVault.findIndex((n) => n.value.toString() === note);
     if (index !== -1) {
-      copyOfAtmVault[index].notes -= notesDispensed[note];
+      copyOfAtmVault[index].notes = Math.max(
+        copyOfAtmVault[index].notes - notesDispensed[note],
+        0
+      );
     }
   }
   return copyOfAtmVault;
