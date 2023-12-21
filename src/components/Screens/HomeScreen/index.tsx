@@ -11,7 +11,7 @@ export default function HomeScreen() {
       <Text fontSize='3xl'>Hi {user.name}</Text>
       <Text fontSize='xl'>Your current balance is</Text>
       <Text fontSize='5xl'>{formatPound(user.currentBalance)}</Text>
-      <Text fontSize='2xl' mt={12}>
+      <Text fontSize='2xl' mt={10}>
         Enter Amount to Withdraw
       </Text>
       <InputGroup pointerEvents='none' w='325px'>

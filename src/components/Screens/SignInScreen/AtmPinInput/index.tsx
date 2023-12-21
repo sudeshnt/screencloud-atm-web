@@ -11,7 +11,7 @@ export default function AtmPinInput() {
     <VStack>
       <Text fontSize='3xl'>Welcome to SC-ATM</Text>
       <HStack pt={4} pb={6} pointerEvents='none'>
-        <PinInput size='lg' value={pin}>
+        <PinInput size='lg' value={pin} mask>
           {Array.from({ length: PIN_LENGTH }, (_, index) => (
             <PinInputField
               key={index}

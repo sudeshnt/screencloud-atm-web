@@ -29,6 +29,6 @@ export const WithdrawErrorMessages: Record<WithdrawErrorCodes, string> = {
 };
 
 export enum SkipRoundsForNotes {
-  'FIVE' = 5,
+  'FIVE' = 8,
   'TWENTY' = 1,
 }
